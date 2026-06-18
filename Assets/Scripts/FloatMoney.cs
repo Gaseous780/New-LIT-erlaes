@@ -7,7 +7,6 @@ public class FloatMoney : MonoBehaviour
     [SerializeField] private SpriteRenderer[] holdersNumbers;
 
     [SerializeField] private Texture[] numbersImages;
-    private Vector3 [] originalPosition = new Vector3 [4];
 
     [SerializeField] private float speed = 1f;
     [SerializeField] private float timeToGetOff = 2f;
@@ -20,17 +19,11 @@ public class FloatMoney : MonoBehaviour
     [SerializeField] private float defaultCutOff = -0.44f;
     [SerializeField] private float speedCutOff = 0.5f;
 
+    [SerializeField]private float yPosition;
+
     private void Awake()
     {
         mpb = new MaterialPropertyBlock();
-    }
-
-    private void Start()
-    {
-        for (int i = 0; i < holdersNumbers.Length; i++) 
-        {
-            originalPosition[i] = holdersNumbers[i].transform.position;
-        }
     }
 
     private void Update()
@@ -51,9 +44,10 @@ public class FloatMoney : MonoBehaviour
     public void ShowMoney (int amount)
     {
         StopAllCoroutines();
+        Debug.Log(amount);
         for (int i = 0; i < holdersNumbers.Length; i++)
         {
-            holdersNumbers[i].transform.position = originalPosition[i];
+            holdersNumbers[i].transform.localPosition = new Vector3 (holdersNumbers[i].transform.localPosition.x, yPosition, holdersNumbers[i].transform.localPosition.z);
             holdersNumbers[i].enabled = false;
             mpb = new MaterialPropertyBlock();
             holdersNumbers[i].GetPropertyBlock(mpb);
@@ -85,10 +79,8 @@ public class FloatMoney : MonoBehaviour
 
         for (int i = 0; i < holdersNumbers.Length; i++)
         {
-            holdersNumbers[i].transform.position = originalPosition[i];
+            holdersNumbers[i].transform.localPosition = new Vector3(holdersNumbers[i].transform.localPosition.x, yPosition, holdersNumbers[i].transform.localPosition.z);
             holdersNumbers[i].enabled = false;
-
-            Debug.Log("Desactivo");
         }
 
         canMove = false;

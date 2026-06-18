@@ -9,6 +9,8 @@ public class EconomyBehaviour : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI textMoney;
 
+    private FloatMoney moneyFloat;
+
     public float _moneyOfThePlayer => moneyOfPlayer;
 
     private void Awake()
@@ -19,10 +21,16 @@ public class EconomyBehaviour : MonoBehaviour
         UpdateUI();
     }
 
+    private void Start()
+    {
+        moneyFloat = GetComponent <FloatMoney>();
+    }
+
     public void IncreaseMoneyForClient (float amount, float happinesBar)
     {
         moneyOfPlayer += amount * GettingMoneyToPay(happinesBar);
         UpdateUI();
+        moneyFloat.ShowMoney((int)amount);
     }
 
     public void IncreaseMoney(float amount)
@@ -35,6 +43,7 @@ public class EconomyBehaviour : MonoBehaviour
     {
         moneyOfPlayer -= amount;
         UpdateUI();
+        moneyFloat.ShowMoney((int)amount);
     }
 
     public void IncreaseInitialMoney(float amount)
