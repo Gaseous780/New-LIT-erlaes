@@ -15,6 +15,7 @@ public class CameraChangeBasic : MonoBehaviour
 
     public void ChangeCamera()
     {
+        Debug.Log("jhg");
         if (cameraToDisable.activeSelf == true)
         {
             cameraToEnable.SetActive(true);

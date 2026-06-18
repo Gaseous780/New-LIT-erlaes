@@ -146,6 +146,11 @@ public class Interaction : MonoBehaviour
         RaycastHit hit;
         if (MySphereCast(out hit))
         {
+            if (hit.collider.CompareTag("Oven"))
+            {
+                hit.collider.gameObject.GetComponent<CameraChangeBasic>().ChangeCamera();
+            }
+
             if (hit.collider.CompareTag("TablePoint"))
             {
                 TablePoint table = hit.collider.GetComponent<TablePoint>();
@@ -174,10 +179,6 @@ public class Interaction : MonoBehaviour
                 if (heldObject.GetComponent<ItemsBase>())
                 {
                     dealingController.SetItemGrabbed(heldObject.GetComponent<ItemsBase>());
-                }
-                if (hit.collider.CompareTag("Oven"))
-                {
-                    hit.collider.gameObject.GetComponent<CameraChangeBasic>().ChangeCamera();
                 }
 
                 soundManager.ReproduceSound(takeExtinguisherSound);

@@ -12632,7 +12632,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -49255,6 +49255,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 683d2598f9b2c014c984641ac635cf29, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 683d2598f9b2c014c984641ac635cf29, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c0b962cc5f37b940b40d7e7f3a08b5e, type: 2}
     - target: {fileID: 919132149155446097, guid: 683d2598f9b2c014c984641ac635cf29, type: 3}
       propertyPath: m_Name
       value: oven
@@ -79279,7 +79287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2024267059
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4086389588401709561}
   - component: {fileID: 3357384668520798153}
   - component: {fileID: 5406696018695149523}
+  - component: {fileID: 6060360099888491997}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Breakable
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3259870146449316447, guid: 4fc4acb9b81aa4745a1ee1ff2c97af72, type: 3}
+  - {fileID: 2100000, guid: 2e7902855827eb6468a3928e385b9947, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,6 +91,18 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6060360099888491997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2545499915484244841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20aec0247bef4ca42a8d8f8a313e8975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EggScript
 --- !u!1 &4467712420459037618
 GameObject:
   m_ObjectHideFlags: 0

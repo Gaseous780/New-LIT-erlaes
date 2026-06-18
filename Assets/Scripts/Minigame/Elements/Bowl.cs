@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bowl : MonoBehaviour
@@ -19,11 +20,34 @@ public class Bowl : MonoBehaviour
     {
         if (other.CompareTag("Breakable") == true)
         {
-            soundManager.ReproduceSound(soundBreak);
-            IAddIngredients recipeToAdd = recipeController as IAddIngredients;
-            recipeToAdd.AddIngredientsToBowl();
-            other.gameObject.SetActive(false);
+            EggScript egg = other.GetComponentInChildren<EggScript>();
+
+            if (egg != null && egg._eggCounter < 2)
+            {
+                MaterialPropertyBlock mbp = new MaterialPropertyBlock();
+                Renderer renderer = egg.gameObject.GetComponent<MeshRenderer>();
+                renderer.GetPropertyBlock(mbp);
+                mbp.SetFloat("_EggState", egg._eggCounter +  1);
+                egg._eggCounter += 1;
+                Debug.Log(mbp.GetFloat("_EggState"));
+                renderer.SetPropertyBlock(mbp);
+
+                return;
+            }
+
+            StartCoroutine(BreakEgg(other));
+
         }
+    }
+
+    private IEnumerator BreakEgg(Collider other)
+    {
+        yield return new WaitForSeconds (1);
+
+        soundManager.ReproduceSound(soundBreak);
+        IAddIngredients recipeToAdd = recipeController as IAddIngredients;
+        recipeToAdd.AddIngredientsToBowl();
+        other.gameObject.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
