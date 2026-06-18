@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: DirtMaterial Variant
   m_Shader: {fileID: -6465566751694194690, guid: e48d62933ee381c46b40c19eb82d15e3, type: 3}
-  m_Parent: {fileID: 2100000, guid: 55a351c1a6e090740b03c5edca6333de, type: 2}
+  m_Parent: {fileID: -876546973899608171, guid: e48d62933ee381c46b40c19eb82d15e3, type: 3}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -24,6 +24,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_91511398b3454c6aa78784315575a645:
+        m_Texture: {fileID: 2800000, guid: cf20f2f7302fee2409278de631bb83d2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtMask:
+        m_Texture: {fileID: 2800000, guid: fec0007b363245f41a3e7abce12cbac9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: d792f60639fbc574a85472e1e6988349, type: 3}
         m_Scale: {x: 1, y: 1}
