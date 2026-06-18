@@ -64,6 +64,12 @@ public class ReWorkRiceBehaviour : MiniGamesBase, IAddIngredients, ISkillCheck, 
 
     [SerializeField] private ParticleSystem particles;
 
+    [Header("Mesh")]
+    [SerializeField] private MeshRenderer rendererSG;
+    [SerializeField] private int index = 1;
+    private MaterialPropertyBlock mpb;
+
+
     [Header("In - World")]
     [SerializeField] private GameObject wokToSpawn; //El prefab del arroz con wok
     [SerializeField] private Transform spawnPosition; //La posición en la que aparecerá el arroz con wok
@@ -79,6 +85,11 @@ public class ReWorkRiceBehaviour : MiniGamesBase, IAddIngredients, ISkillCheck, 
     [SerializeField] private AudioClip fireErrorSound;
     [SerializeField] private AudioClip succesSound;
     [SerializeField] private AudioClip finalSkillCheck;
+
+    private void Awake()
+    {
+        mpb = new MaterialPropertyBlock();
+    }
 
     protected override void Start()
     {
@@ -109,6 +120,12 @@ public class ReWorkRiceBehaviour : MiniGamesBase, IAddIngredients, ISkillCheck, 
         }
 
         StartCoroutine(InitWithDelay());
+
+        rendererSG.GetPropertyBlock(mpb, index);
+
+        mpb.SetFloat("_OnFire", 0);
+
+        rendererSG.SetPropertyBlock(mpb, index);
     }
 
     public override IEnumerator InitWithDelay()
@@ -225,6 +242,12 @@ public class ReWorkRiceBehaviour : MiniGamesBase, IAddIngredients, ISkillCheck, 
 
     public override bool Error()
     {
+        rendererSG.GetPropertyBlock(mpb, index);
+
+        mpb.SetFloat("_OnFire", 1);
+
+        rendererSG.SetPropertyBlock(mpb, index);
+
         if (errorCounters > amountOfErrorsRe) //Al llegar al máximo de errores
         {
             StopMinigame(false); //Se para el juego, con la señal de que se fallo

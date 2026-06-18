@@ -19082,7 +19082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7710837196661174908, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7938490137886499074, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19185,6 +19185,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1800685930}
     - target: {fileID: 8753105311934923750, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
+      propertyPath: rendererSG
+      value: 
+      objectReference: {fileID: 1855827379}
+    - target: {fileID: 8753105311934923750, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
       propertyPath: itsOverText
       value: 
       objectReference: {fileID: 2112805814}
@@ -19198,7 +19202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8753105311934923750, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
       propertyPath: eggsNecesary
-      value: 14
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8753105311934923750, guid: 2c28ea29e416018498fff0ef5ff0bd4c, type: 3}
       propertyPath: initSoundPan
@@ -61463,7 +61467,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -4973734387028869240, guid: 514a6eeca2a6b1441bb290d96b4d04df, type: 3}
-  - {fileID: -3141575536127030034, guid: 514a6eeca2a6b1441bb290d96b4d04df, type: 3}
+  - {fileID: 2100000, guid: 77ccc36c4c028ea4d82b74da36c92a14, type: 2}
   - {fileID: 8637527682490492027, guid: 514a6eeca2a6b1441bb290d96b4d04df, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0

@@ -128,9 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be61edddc2a52be41a2603cc4d1f2494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodBehaviour
-  food: 0
+  food: 2
   valueOfFood: 0
-  timeInGetBad: 0
+  timeInGetBad: 10
+  rendererMPB: {fileID: 20254098762391304}
+  indexMesh: 2
 --- !u!1001 &2200789990574875109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,11 +197,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2219485342309367533, guid: f876b3b194340044ab77b6aef7913482, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 10ac88065b55189419e083ceff034851, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f876b3b194340044ab77b6aef7913482, type: 3}
+--- !u!23 &20254098762391304 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2219485342309367533, guid: f876b3b194340044ab77b6aef7913482, type: 3}
+  m_PrefabInstance: {fileID: 2200789990574875109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1156536846845846631 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1046557998754219394, guid: f876b3b194340044ab77b6aef7913482, type: 3}

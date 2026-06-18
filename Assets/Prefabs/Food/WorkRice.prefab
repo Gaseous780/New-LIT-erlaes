@@ -128,9 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be61edddc2a52be41a2603cc4d1f2494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodBehaviour
-  food: 0
+  food: 1
   valueOfFood: 0
-  timeInGetBad: 0
+  timeInGetBad: 10
+  rendererMPB: {fileID: 1755422892771852176}
+  indexMesh: 1
 --- !u!1001 &7940748846312274095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -195,6 +197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArrozAlWok
       objectReference: {fileID: 0}
+    - target: {fileID: 8534240836132013887, guid: ff7d9587e04f599488a8c77248fe6573, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 14dee7c732f12b147a79ba1af1e9c693, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -203,5 +209,10 @@ PrefabInstance:
 --- !u!4 &583127154357617919 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7360177077382282320, guid: ff7d9587e04f599488a8c77248fe6573, type: 3}
+  m_PrefabInstance: {fileID: 7940748846312274095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1755422892771852176 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8534240836132013887, guid: ff7d9587e04f599488a8c77248fe6573, type: 3}
   m_PrefabInstance: {fileID: 7940748846312274095}
   m_PrefabAsset: {fileID: 0}
