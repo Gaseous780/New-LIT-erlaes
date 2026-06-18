@@ -1,0 +1,163 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class BeatBehaviour : MonoBehaviour
+{
+    [SerializeField] private Transform whisk;
+    [SerializeField] private Transform centerPoint;
+    [SerializeField] private Slider mixBar;
+    [SerializeField] private float mixSpeed = 0.4f;
+    [SerializeField] private float decaySpeed = 0.2f;
+    [SerializeField] private float requiredRotation = 5f;
+    [SerializeField] private int maxSuccesses = 3;
+    private bool dragging;
+    private Vector2 previousDirection;
+    private float accumulatedRotation;
+    private int completedMixes;
+    private Camera cam;
+    public System.Action onMixCompleted;
+    [SerializeField] private CircleCollider2D bowlArea; 
+    private bool mixCompleted;
+    private bool canMix = true;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+
+        mixBar.maxValue = 1f;
+        mixBar.value = 0;
+    }
+
+    private void Update()
+    {
+        HandleDragging();
+
+        DecayBar();
+    }
+
+    private void HandleDragging()
+    {
+        if (!canMix)
+            return;
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            if (bowlArea.OverlapPoint(GetMouseWorldPosition()))
+            {
+                dragging = true;
+
+                previousDirection =
+                    (Vector2)GetMouseWorldPosition() -
+                    (Vector2)centerPoint.position;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            dragging = false;
+        }
+
+        if (!dragging)
+            return;
+
+        Vector2 currentDirection =
+            (Vector2)GetMouseWorldPosition() -
+            (Vector2)centerPoint.position;
+
+        float angle =
+            Vector2.SignedAngle(previousDirection, currentDirection);
+
+        accumulatedRotation += Mathf.Abs(angle);
+
+        RotateWhisk(currentDirection);
+
+        if (accumulatedRotation >= requiredRotation)
+        {
+            accumulatedRotation = 0;
+
+            AddProgress();
+        }
+
+        previousDirection = currentDirection;
+    }
+
+    private void RotateWhisk(Vector2 dir)
+    {
+        float angle =
+            Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        whisk.rotation = Quaternion.Euler(0, 0, angle - 90f);
+    }
+
+    private void AddProgress()
+    {
+        if (mixCompleted)
+        {
+            return;
+        }
+
+        mixBar.value += mixSpeed * Time.deltaTime * 60f;
+
+        if (mixBar.value >= mixBar.maxValue)
+        {
+            mixBar.value = mixBar.maxValue;
+
+            mixCompleted = true;
+
+            onMixCompleted?.Invoke();
+        }
+    }
+    public void SetMixState(bool state)
+    {
+        canMix = state;
+    }
+    private void DecayBar()
+    {
+        if (dragging)
+            return;
+
+        if (mixBar.value > 0)
+        {
+            mixBar.value -= decaySpeed * Time.deltaTime;
+
+            if (mixBar.value < 0)
+                mixBar.value = 0;
+        }
+    }
+
+    public void SkillCheckSuccess()
+    {
+        completedMixes++;
+
+        mixBar.value = 0;
+
+        if (completedMixes >= maxSuccesses)
+        {
+            FinishMinigame();
+        }
+    }
+    public void ResetMix()
+    {
+        mixBar.value = 0;
+
+        accumulatedRotation = 0;
+
+        dragging = false;
+
+        mixCompleted = false;
+    }
+    private void FinishMinigame()
+    {
+        Debug.Log(" COMPLETDO");
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mouse = Input.mousePosition;
+
+        mouse.z = 10f;
+
+        return cam.ScreenToWorldPoint(mouse);
+    }
+}

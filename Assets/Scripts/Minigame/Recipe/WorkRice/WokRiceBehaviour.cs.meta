@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: e80693b22fcef3c4a91b8563d296575b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - recipeImage: {fileID: 21300000, guid: 530e406d7405d0b4fac77ae55c0c6c56, type: 3}
+  - miniGameControllers: {instanceID: 0}
+  - miniGameManager: {instanceID: 0}
+  - eggs: {instanceID: 0}
+  - barProgress: {instanceID: 0}
+  - fryPanSkillCheck: {instanceID: 0}
+  - workToSpawn: {instanceID: 0}
+  - spawnPosition: {instanceID: 0}
+  - fireBehaviour: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
