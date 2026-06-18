@@ -38,9 +38,21 @@ public class BeatBehaviour : MonoBehaviour
     [SerializeField] private AudioClip succesPointSound;
     private SoundManager soundManager;
 
+    [SerializeField] private GameObject rendererOn;
+
     private void Start()
     {
         soundManager = GameManager.instance._soundManager;
+    }
+
+    private void OnEnable()
+    {
+        rendererOn.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        rendererOn.SetActive(true);
     }
 
     private void Awake()
@@ -194,6 +206,8 @@ public class BeatBehaviour : MonoBehaviour
 
         //mixBar.value += mixSpeed * Time.deltaTime * 60f;
         mixBar.value += mixSpeed * forceMultiplier * Time.deltaTime * 60f;
+
+        if (rendererOn.activeSelf == false) { rendererOn.SetActive(true); }
 
         soundManager.ReproduceChainSounds(progresSounds, intervalBetweenProgresSound);
 

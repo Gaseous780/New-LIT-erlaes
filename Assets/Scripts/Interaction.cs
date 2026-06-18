@@ -38,10 +38,7 @@ public class Interaction : MonoBehaviour
 
     [Header ("Pipeline Section")]
     [SerializeField] private UniversalRenderPipelineAsset URPA;
-    [SerializeField] private UniversalRendererData universalRendererData;
-    [SerializeField] private Material materialToPass;
-    private Material defaultMaterialData;
-    private int counterShader;
+    [SerializeField] private int counterShader;
 
     private ClientBehaviour seenClient;
 
@@ -62,13 +59,11 @@ public class Interaction : MonoBehaviour
         soundManager = GameManager.instance._soundManager;
 
         SetPipeline(counterShader);
-        counterShader++;
+        //counterShader++;
     }
 
     public void SetPipeline(int mode)
     {
-        if (URPA == null) { return; }
-
         UniversalRenderPipelineAsset urpAsset = Resources.Load<UniversalRenderPipelineAsset>(URPA.name);
         Type typ = typeof(UniversalRenderPipelineAsset);
         FieldInfo type = typ.GetField("m_DefaultRendererIndex", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -212,12 +207,12 @@ public class Interaction : MonoBehaviour
 
                         clientHeld = first;
 
-                        SetPipeline(counterShader);
-                        counterShader++;
-                        if (counterShader > 4)
-                        {
-                            counterShader = 1;
-                        }
+                        //SetPipeline(counterShader);
+                        //counterShader++;
+                        //if (counterShader > 4)
+                        //{
+                        //    counterShader = 1;
+                        //}
 
                         ClientBehaviour cb = first.GetComponent<ClientBehaviour>();
 
@@ -241,12 +236,12 @@ public class Interaction : MonoBehaviour
 
                     clientHeld = clientBehaviour.gameObject;
 
-                    SetPipeline(counterShader);
-                    counterShader++;
-                    if (counterShader > 4)
-                    {
-                        counterShader = 1;
-                    }
+                    //SetPipeline(counterShader);
+                    //counterShader++;
+                    //if (counterShader > 4)
+                    //{
+                    //    counterShader = 1;
+                    //}
 
                     clientBehaviour.StartFollowing(transform);
 
@@ -313,7 +308,7 @@ public class Interaction : MonoBehaviour
                     clientHeld = null;
                     followingClient = null;
 
-                    SetPipeline(0);
+                    //SetPipeline(0);
                     return;
                 }
             }
@@ -331,7 +326,7 @@ public class Interaction : MonoBehaviour
             followingClient = null;
             TableIndicators(false);
 
-            SetPipeline(0);
+            //SetPipeline(0);
             return;
         }
 

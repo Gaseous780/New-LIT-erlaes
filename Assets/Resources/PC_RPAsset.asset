@@ -17,13 +17,13 @@ MonoBehaviour:
   m_RendererType: 1
   m_RendererData: {fileID: 0}
   m_RendererDataList:
-  - {fileID: 11400000, guid: f288ae1f4751b564a96ac7587541f7a2, type: 2}
+  - {fileID: 11400000, guid: 19561753e4f79f44ea1b60f527986c0d, type: 2}
   - {fileID: 11400000, guid: d7e9e1f4aaebf2448950dfd8a3581e32, type: 2}
   - {fileID: 11400000, guid: 21aae66a55a0cfc4d822d4fed6bb7860, type: 2}
   - {fileID: 11400000, guid: c4ac9f152a809784e9a8a7577f1a176a, type: 2}
   - {fileID: 11400000, guid: f584e48921f430945a08ebf9f0f5ac64, type: 2}
   - {fileID: 11400000, guid: 2b01efc0cccb6184ea5aa20e141c8435, type: 2}
-  m_DefaultRendererIndex: 5
+  m_DefaultRendererIndex: 1
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 1
   m_OpaqueDownsampling: 1
