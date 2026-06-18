@@ -67,6 +67,8 @@ public class Interaction : MonoBehaviour
 
     public void SetPipeline(int mode)
     {
+        if (URPA == null) { return; }
+
         UniversalRenderPipelineAsset urpAsset = Resources.Load<UniversalRenderPipelineAsset>(URPA.name);
         Type typ = typeof(UniversalRenderPipelineAsset);
         FieldInfo type = typ.GetField("m_DefaultRendererIndex", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);

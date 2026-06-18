@@ -158,6 +158,7 @@ MonoBehaviour:
   queueSpeed: 3
   followStopDistance: 1.5
   externalMovement: 0
+  renderer1: {fileID: 7983615227225241591}
   clientType: 0
   eatingTime: 10
   door: {fileID: 0}
@@ -1155,6 +1156,10 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8887491248750792259, guid: 2fc2c6d76201aae4e95aad9ed713f3f7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4149e37a7431d4048acbc0ff611e4cee, type: 2}
     - target: {fileID: -8679921383154817045, guid: 2fc2c6d76201aae4e95aad9ed713f3f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.08055878
@@ -1251,5 +1256,10 @@ Animator:
 --- !u!4 &7919737661857030561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2fc2c6d76201aae4e95aad9ed713f3f7, type: 3}
+  m_PrefabInstance: {fileID: 7665748941441861194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7983615227225241591 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8887491248750792259, guid: 2fc2c6d76201aae4e95aad9ed713f3f7, type: 3}
   m_PrefabInstance: {fileID: 7665748941441861194}
   m_PrefabAsset: {fileID: 0}
