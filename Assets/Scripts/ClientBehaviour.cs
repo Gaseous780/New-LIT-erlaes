@@ -60,6 +60,9 @@ public class ClientBehaviour : MonoBehaviour
     private bool isFollowingPlayer = false;
     [SerializeField] private float followStopDistance = 2f;
     public bool externalMovement;
+
+    [SerializeField] private Renderer renderer1;
+    private MaterialPropertyBlock mpb;
     public enum ClientType
     {
         Normal,
@@ -88,6 +91,10 @@ public class ClientBehaviour : MonoBehaviour
     [SerializeField] private float oldWomanFollowMultiplier = 0.5f;
     public bool isInQueue = true;
     private NavMeshAgent agent;
+
+    private bool isSelected;
+
+    public bool _isSelected { get { return isSelected; } set { isSelected = value; } }
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -220,6 +227,10 @@ public class ClientBehaviour : MonoBehaviour
         }
 
         animationState = 0;
+
+        mpb = new MaterialPropertyBlock();
+
+        isSelected = false;
     }
 
     void ReplaceDish(DishReference dish)
@@ -251,6 +262,23 @@ public class ClientBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (isSelected == true)
+        {
+            renderer1.GetPropertyBlock(mpb);
+
+            mpb.SetFloat("_isSelected", 1);
+
+            renderer1.SetPropertyBlock(mpb);
+        }
+        else
+        {
+            renderer1.GetPropertyBlock(mpb);
+
+            mpb.SetFloat("_isSelected", 0);
+
+            renderer1.SetPropertyBlock(mpb);
+        }
+
         if (isEating)
         {
             currentEatingTime -= Time.deltaTime;
@@ -385,6 +413,23 @@ public class ClientBehaviour : MonoBehaviour
                     Conditions.instance.AddFail();
                     DestroyClient();
                 }
+            }
+            if (percent <= 0.20f) //AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+            {
+                renderer1.GetPropertyBlock(mpb);
+
+                mpb.SetFloat("_isAngry", 1);
+                Debug.Log(mpb.GetFloat("_isAngry" + "11111111111111"));
+
+                renderer1.SetPropertyBlock(mpb);
+            }
+            else
+            {
+                renderer1.GetPropertyBlock(mpb);
+
+                mpb.SetFloat("_isAngry", 0);
+
+                renderer1.SetPropertyBlock(mpb);
             }
         }
         if ((isAngry || isBroken) && isShakuza && player != null)
@@ -525,7 +570,9 @@ public class ClientBehaviour : MonoBehaviour
         {
             table.busy = false;
             table._tableOrder._clientOnTable = null;
-            
+
+            table._tableOrder._cleandCode.ResetPaint();
+
             if (GameManager.instance._miniGameManager._orderManager._clientOrders.ContainsKey(gameObject) == true)
             {
                 GameManager.instance._UIcontroller.RemoveFoodFromTasks(gameObject);

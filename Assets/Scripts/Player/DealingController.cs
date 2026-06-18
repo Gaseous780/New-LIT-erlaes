@@ -24,6 +24,8 @@ public class DealingController : MonoBehaviour
     [SerializeField] private AudioClip openPanelSound;
     private SoundManager soundManager;
 
+    [SerializeField] private GameObject sil;
+
     private void Awake()
     {
         useGrabItem = false;
@@ -132,6 +134,7 @@ public class DealingController : MonoBehaviour
             }
             else if (detectingRay.transform.gameObject.CompareTag("Panel") == true)
             {
+                sil.SetActive(false);
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 Camera.main.gameObject.GetComponent<CameraManager>().ChangeCamera(2);

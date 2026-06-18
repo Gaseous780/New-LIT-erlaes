@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class Interaction : MonoBehaviour
 {
@@ -33,12 +36,21 @@ public class Interaction : MonoBehaviour
     [SerializeField] private AudioClip grabFoodSound;
     private SoundManager soundManager;
 
+    [Header ("Pipeline Section")]
+    [SerializeField] private UniversalRenderPipelineAsset URPA;
+    [SerializeField] private UniversalRendererData universalRendererData;
+    [SerializeField] private Material materialToPass;
+    private Material defaultMaterialData;
+    private int counterShader;
+
+    private ClientBehaviour seenClient;
+
     public GameObject _heldObject { get { return heldObject; } set { heldObject = value; } }
     private void Awake()
     {
         interactAction.Enable();
-        spawner = Object.FindFirstObjectByType<ClientSpawner>();
-        tables = Object.FindObjectsByType<TablePoint>(FindObjectsSortMode.None);
+        spawner = UnityEngine.Object.FindFirstObjectByType<ClientSpawner>();
+        tables = UnityEngine.Object.FindObjectsByType<TablePoint>(FindObjectsSortMode.None);
 
         dealingController = GetComponent<DealingController>();
     }
@@ -48,6 +60,19 @@ public class Interaction : MonoBehaviour
         defaultSprite = interactionAdvise.gameObject.GetComponent<SpriteRenderer>().sprite;
 
         soundManager = GameManager.instance._soundManager;
+
+        SetPipeline(counterShader);
+        counterShader++;
+    }
+
+    public void SetPipeline(int mode)
+    {
+        UniversalRenderPipelineAsset urpAsset = Resources.Load<UniversalRenderPipelineAsset>(URPA.name);
+        Type typ = typeof(UniversalRenderPipelineAsset);
+        FieldInfo type = typ.GetField("m_DefaultRendererIndex", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        int currentRendererIndex = (int)type.GetValue(urpAsset);
+        int newRendererIndex = currentRendererIndex == 0 ? 1 : 0; //Simple toggle between index 0 and 1
+        type.SetValue(urpAsset, mode);
     }
 
     private void Update()
@@ -119,7 +144,16 @@ public class Interaction : MonoBehaviour
         RaycastHit hit;
         if (MySphereCast(out hit))
         {
+            if (hit.collider.CompareTag("TablePoint"))
+            {
+                TablePoint table = hit.collider.GetComponent<TablePoint>();
+                if (table == null || table.busy) { return; }
+
+                if (table._tableOrder._cleandCode._isDirt == true) { table._tableOrder._cleandCode.OnCamera(); return; }
+            }
+
             FireExtinguisherBehaviour extinguisher = hit.collider.GetComponentInParent<FireExtinguisherBehaviour>();
+
 
             if (extinguisher != null)
             {
@@ -138,6 +172,10 @@ public class Interaction : MonoBehaviour
                 if (heldObject.GetComponent<ItemsBase>())
                 {
                     dealingController.SetItemGrabbed(heldObject.GetComponent<ItemsBase>());
+                }
+                if (hit.collider.CompareTag("Oven"))
+                {
+                    hit.collider.gameObject.GetComponent<CameraChangeBasic>().ChangeCamera();
                 }
 
                 soundManager.ReproduceSound(takeExtinguisherSound);
@@ -171,6 +209,13 @@ public class Interaction : MonoBehaviour
 
                         clientHeld = first;
 
+                        SetPipeline(counterShader);
+                        counterShader++;
+                        if (counterShader > 4)
+                        {
+                            counterShader = 1;
+                        }
+
                         ClientBehaviour cb = first.GetComponent<ClientBehaviour>();
 
                         cb.StartFollowing(transform);
@@ -192,6 +237,13 @@ public class Interaction : MonoBehaviour
                     TableIndicators(true);
 
                     clientHeld = clientBehaviour.gameObject;
+
+                    SetPipeline(counterShader);
+                    counterShader++;
+                    if (counterShader > 4)
+                    {
+                        counterShader = 1;
+                    }
 
                     clientBehaviour.StartFollowing(transform);
 
@@ -226,6 +278,8 @@ public class Interaction : MonoBehaviour
                     TablePoint table = hit.collider.GetComponent<TablePoint>();
                     if (table == null || table.busy) return;
 
+                    if (table._tableOrder._cleandCode._isDirt == true) { table._tableOrder._cleandCode.OnCamera(); return; }
+
                     //if (!followingClient.CanBeSeated())
                     //{
                     //    return;
@@ -255,6 +309,8 @@ public class Interaction : MonoBehaviour
                     TableIndicators(false);
                     clientHeld = null;
                     followingClient = null;
+
+                    SetPipeline(0);
                     return;
                 }
             }
@@ -271,6 +327,8 @@ public class Interaction : MonoBehaviour
             clientHeld = null;
             followingClient = null;
             TableIndicators(false);
+
+            SetPipeline(0);
             return;
         }
 
@@ -351,6 +409,12 @@ public class Interaction : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward);
         RaycastHit hit;
 
+        if (seenClient != null)
+        {
+            seenClient._isSelected = false;
+            seenClient = null;
+        }
+
         if (!MySphereCast(out hit))
         {
             interactionAdvise.gameObject.SetActive(false);
@@ -377,7 +441,7 @@ public class Interaction : MonoBehaviour
         }
         if (MySphereCast(out hit) && heldObject == null && followingClient == null)
         {
-            if (hit.collider.CompareTag("Client") || hit.collider.CompareTag("Grabbable") || hit.collider.CompareTag("FoodGenerator") || hit.collider.CompareTag("MinigameTable"))
+            if (hit.collider.CompareTag("Client") || hit.collider.CompareTag("Grabbable") || hit.collider.CompareTag("FoodGenerator") || hit.collider.CompareTag("MinigameTable") || hit.collider.CompareTag("Oven"))
             {
                 GameObject gameObjectSeen = hit.collider.gameObject;
 
@@ -385,6 +449,9 @@ public class Interaction : MonoBehaviour
 
                 if (cb != null)
                 {
+                    seenClient = cb;
+                    cb._isSelected = true;
+
                     if (cb._canTakeOrder > 0 || cb._isOnTable)
                     {
                         interactionAdvise.gameObject.SetActive(false);
@@ -492,6 +559,13 @@ public class Interaction : MonoBehaviour
                 return;
             }
         }
+
+        if (seenClient != null)
+        {
+            seenClient._isSelected = false;
+            seenClient = null;
+        }
+
         interactionAdvise.gameObject.SetActive(false);
         interactionAdvise.GetComponent<SpriteRenderer>().sprite = defaultSprite;
     }

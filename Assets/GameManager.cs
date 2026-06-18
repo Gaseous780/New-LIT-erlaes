@@ -1,3 +1,4 @@
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     private EconomyBehaviour economyBehaviour;
     private Conditions gameConditions;
     private FeedbackController feedbackController;
+    private Interaction interaction;
 
     [SerializeField] private Texture2D cursorDefault;
     [SerializeField] private Texture2D knifeCursor;
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public EconomyBehaviour _economiyBehaviour => economyBehaviour;
     public Conditions _gameConditions => gameConditions;
     public FeedbackController _feedbackController => feedbackController;
+    public Interaction _interaction => interaction;
 
     private void Awake()
     {
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
         economyBehaviour = FindAnyObjectByType<EconomyBehaviour>();
         gameConditions = FindAnyObjectByType<Conditions>();
         feedbackController = FindAnyObjectByType<FeedbackController>();
+        interaction = FindAnyObjectByType<Interaction>();
 
         if (scene.buildIndex == 1) 
         {
@@ -81,6 +85,7 @@ public class GameManager : MonoBehaviour
         economyBehaviour = FindAnyObjectByType<EconomyBehaviour>();
         gameConditions = FindAnyObjectByType<Conditions>();
         feedbackController = FindAnyObjectByType<FeedbackController>();
+        interaction = FindAnyObjectByType<Interaction>();
     }
 
     public void DefineCursor (int cursorType) //0 = mouse Default, 1 = mouse Cuchillo

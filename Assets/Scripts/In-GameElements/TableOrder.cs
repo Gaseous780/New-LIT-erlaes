@@ -4,6 +4,11 @@ public class TableOrder : MonoBehaviour
 {
     private ClientBehaviour clientOnTable;
 
+    [SerializeField] private CleanCode cleanCode;
+    public CleanCode _cleandCode => cleanCode;
+
+    public bool isDirt = false;
+
     public ClientBehaviour _clientOnTable { set { clientOnTable = value; } }
 
     public void LeftFood (FoodBehaviour food, float valueOfFood)

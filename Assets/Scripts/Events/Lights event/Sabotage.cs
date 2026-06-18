@@ -37,6 +37,9 @@ public class Sabotage : MonoBehaviour
     [SerializeField] private AudioClip powerOffSound;
     private SoundManager soundManager;
 
+    [SerializeField] private Interaction interaction;
+    [SerializeField] private GameObject silhoutte;
+
     private void OnEnable()
     {
         float nextWait = Random.Range(minWaitTime, maxWaitTime);
@@ -45,6 +48,9 @@ public class Sabotage : MonoBehaviour
 
     private void Start()
     {
+        float nextWait = Random.Range(minWaitTime, maxWaitTime);
+        StartCoroutine(SabotageTimer(nextWait));
+
         soundManager = GameManager.instance._soundManager;
     }
 
@@ -67,6 +73,10 @@ public class Sabotage : MonoBehaviour
         if (sabotageInProgress) return;
 
         sabotageInProgress = true;
+
+        interaction.SetPipeline(5);
+        silhoutte.SetActive(true);
+
         soundManager.ReproduceSound(laughSound);
         if (saboteurPrefab != null && spawnPoint != null)
         {
@@ -107,7 +117,11 @@ public class Sabotage : MonoBehaviour
     public void RestoreLights()
     {
         StartCoroutine(FadeLight(1f));
-        sabotageInProgress = false; 
+
+        //silhoutte.SetActive(false);
+        interaction.SetPipeline(0);
+        sabotageInProgress = false;
+
         canvasElements.SetActive(true);
         if (entryPanel != null)
         {
